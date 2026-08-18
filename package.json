@@ -7,10 +7,16 @@
   "bin": {
     "temporal-fmt-codemod": "./dist/cli.js"
   },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsup && tsc --declaration --emitDeclarationOnly",
     "test": "node --test test/*.test.js",
-    "codemod": "node dist/cli.js"
+    "codemod": "node dist/cli.js",
+    "prepublishOnly": "npm run build && npm test"
   },
   "keywords": [
     "jscodeshift",
