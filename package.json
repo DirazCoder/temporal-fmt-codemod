@@ -1,6 +1,6 @@
 {
   "name": "temporal-fmt-codemod",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "jscodeshift codemod that rewrites dayjs and date-fns call sites to temporal-fmt equivalents. AST-based, not regex — safe to run unsupervised on a real production codebase.",
   "type": "module",
   "main": "./dist/index.js",
