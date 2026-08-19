@@ -45,7 +45,7 @@ export const DAYJS_TOKEN_MAP: Record<string, string | null> = {
   SSS: 'SSS',
   // AM/PM
   A: 'a',
-  a: 'a', // dayjs lower-case AM/PM; temporal-fmt's `a` is locale-aware and uses the locale's preferred case. Semantic mismatch but close enough for en-US — keep, with a note.
+  a: 'a', // dayjs's lowercase `a` and temporal-fmt's `a` are both case-insensitive on the AM/PM marker, so this maps cleanly now (temporal-fmt/#issue — 'a' used to be exact-case only, was a semantic mismatch before that changed).
 
   // ----- tokens that don't map 1:1 to temporal-fmt -----
 
