@@ -72,10 +72,13 @@ export const DAYJS_TOKEN_MAP: Record<string, string | null> = {
   ww: 'ww', // dayjs ww = ISO week, maps directly
   w: null,
 
-  // Unix timestamp tokens — temporal-fmt formats Temporal objects, not
-  // raw timestamps. No 1:1 equivalent.
-  X: null, // seconds since epoch
-  x: null, // milliseconds since epoch
+  // dayjs `X` (seconds since epoch) and `x` (ms since epoch) — temporal-fmt
+  // formats Temporal objects, not raw timestamps, so there's no
+  // equivalent for what dayjs means by these. Note temporal-fmt does
+  // define X/x itself (UTC offset tokens, 0.8.7) — same spelling,
+  // different meaning, still not a valid target for these.
+  X: null,
+  x: null,
 };
 
 // Builds the translated format string + a list of tokens that couldn't

@@ -12,8 +12,6 @@ export const DATE_FNS_TOKEN_MAP: Record<string, string | null> = {
   // year
   yyyy: 'yyyy',
   yy: 'yy',
-  y: 'y', // date-fns has `y` (numeric year); temporal-fmt doesn't — but `y` isn't a temporal-fmt token either, it just becomes literal. Hmm. Actually date-fns `y` and temporal-fmt `yyyy` differ in semantics (one is variable-width). Mark as null.
-  // Override: date-fns `y` doesn't map cleanly to temporal-fmt. Leave-alone.
 };
 // Override the `y` entry — date-fns `y` is "numeric year" (variable width),
 // temporal-fmt only has `yyyy`/`yy`. The codemod can't pick which width
@@ -38,7 +36,7 @@ const IDENTICAL_TOKENS = [
   'w', 'ww', 'W', 'WW',
   'I', 'II', 'IIII',
   'D', 'DD', 'DDD',
-  'do', 'Do', 'Mo', 'Qo', 'X', 'x',
+  'do', 'Do', 'Mo', 'Qo',
   'k', 'kk',
   'T', 't',
   'R', 'RR', 'RRR', 'RRRR',
@@ -64,8 +62,13 @@ for (const tok of IDENTICAL_TOKENS) {
 // Tokens where date-fns and temporal-fmt disagree on semantics (not
 // just spelling). Mark null so the codemod leaves them alone + warns.
 
-// `X` (Unix timestamp seconds) and `x` (Unix timestamp ms) — temporal-fmt
-// has no equivalent (it formats Temporal objects, not timestamps).
+// date-fns `X` (Unix timestamp seconds) and `x` (Unix timestamp ms) mean
+// something different from temporal-fmt's own `X`/`x` (UTC offset
+// tokens, added in 0.8.7) — same spelling, unrelated semantics. Kept out
+// of IDENTICAL_TOKENS above for this reason: an identical-spelling entry
+// there would map date-fns's epoch timestamp onto temporal-fmt's offset
+// token and produce a wrong (but not obviously wrong) result instead of
+// a warning.
 DATE_FNS_TOKEN_MAP.X = null;
 DATE_FNS_TOKEN_MAP.x = null;
 

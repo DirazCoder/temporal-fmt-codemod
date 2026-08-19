@@ -133,6 +133,19 @@ test('date-fns token table: P (localized long format) is unmappable', () => {
   assert.ok(out.unmapped.includes('P'));
 });
 
+test('date-fns token table: X/x (unix timestamp) stay unmapped, not identity-mapped', () => {
+  // X/x used to sit in IDENTICAL_TOKENS (mapping to themselves) and get
+  // overridden back to null afterward — correct only because of file
+  // order. date-fns's X/x (epoch seconds/ms) don't mean the same thing
+  // as temporal-fmt's own X/x (UTC offset, 0.8.7), so an identity map
+  // here would silently reinterpret a timestamp token as an offset
+  // token. Guards against that regressing if the table gets reordered.
+  const out = translateDateFnsFormatString('X x');
+  assert.ok(out.unmapped.includes('X'));
+  assert.ok(out.unmapped.includes('x'));
+  assert.equal(out.translated, 'X x');
+});
+
 test('dayjs bracket-escaping: text in [..] converts to single-quoted literals', () => {
   // dayjs uses [at] for literal text; temporal-fmt uses 'at'.
   const out = translateDayjsFormatString('YYYY [at] HH:mm');
