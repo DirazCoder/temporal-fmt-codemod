@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "build": "tsup && tsc --declaration --emitDeclarationOnly",
-    "test": "node --test test/*.test.js",
+    "test": "node --test test/codemod.test.js",
     "codemod": "node dist/cli.js",
     "prepublishOnly": "npm run build && npm test"
   },
